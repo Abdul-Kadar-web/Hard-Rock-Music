@@ -10,11 +10,22 @@
 
 // }
 
+// enter button
+var searchButton = document.getElementById("search-button");
+var searchField = document.getElementById("search-field");
+
+searchField.addEventListener("keypress", function (event) {
+    if (event.key == 'Enter') {
+        searchButton.click();
+    }
+});
+
 
 // .then dia kaj 
 const searchSongs = () => {
     const searchText = document.getElementById('search-field').value;
     const url = ` https://api.lyrics.ovh/suggest/${searchText}`
+    toggleSpinner(true);
 
     // load data 
     fetch(url)
@@ -44,6 +55,7 @@ const displaySongs = songs => {
         </div>
         `;
         songContainer.appendChild(songDiv);
+        toggleSpinner(false);
 
     });
 }
@@ -78,4 +90,18 @@ const displayLyrics = lyrics => {
 const displayError = error => {
     const errorTag = document.getElementById('error-massage');
     errorTag.innerText = error;
+}
+
+const toggleSpinner = (show) => {
+    const spinner = document.getElementById('loading-spinner');
+    const songs = document.getElementById('song-Container');
+    // if(show){
+    //     spinner.classList.remove('d-none');
+    // }
+    // else{
+    //     spinner.classList.add('d-none');
+    // }
+    // upore eta k short a korte hole
+    spinner.classList.toggle('d-none');
+    songs.classList.toggle('d-none');
 }
